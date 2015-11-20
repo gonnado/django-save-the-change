@@ -8,8 +8,8 @@ from copy import copy
 from django.db import models
 from django.utils import six
 from django.db.models import ManyToManyField, ForeignKey
+from django.contrib.gis.db.models.fields import PointField
 from django.db.models.related import RelatedObject
-
 
 __all__ = ('SaveTheChange', 'TrackChanges')
 
@@ -60,7 +60,7 @@ class BaseChangeTracker(object):
 			except AttributeError:
 				name_map = self._meta.init_name_map()
 			
-			if name in name_map and name_map[name][0].__class__ not in (ManyToManyField, RelatedObject):
+			if name in name_map and name_map[name][0].__class__ not in (ManyToManyField, RelatedObject, PointField):
 				field = name_map[name][0]
 				
 				if isinstance(field, ForeignKey) and field.null is False:
